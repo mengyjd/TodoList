@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>待办事项</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css">
+
+
+
+</head>
+<body>
+<div class="body" id="app">
+
+    <div class="main-task" ref="mainTask">
+        <div id="header">
+
+            <span class="date">2018-10-11</span>
+
+            <select id="todo-type"
+                    class="middle-vertical"
+                    value="all"
+                    v-model="selectType"
+            >
+                <option value="" disabled>请选择类型</option>
+                <option value="unfinished">未完成</option>
+                <option value="finished">已完成</option>
+                <option value="all">全部</option>
+            </select>
+
+        </div>
+
+        <div>
+
+            <div id="buildTask" >
+
+                <div class="new-todo-div"
+                     v-if="showNewTodoDiv"
+                     @click="switchNewTodoDivAndAddTodoDiv"
+                >
+                <span class="new-todo-text"
+                      id="add-task"
+                >新建任务</span>
+                    <button id="add-btn" class="add-btn middle-vertical">+</button>
+                </div>
+
+                <div class="add-task-div" v-if="showAddTaskDiv">
+                    <input class="add-task-input"
+                           id="addTask"
+                           v-model="newTodo.content"
+                           @keyup.enter="addTodo"
+                           type="text"
+                           placeholder="按Enter键完成输入">
+
+                    <button id="cancel-newTodo"
+                            class="base-btn middle-vertical"
+                            @click="cancelNewTodo"
+                    >取消</button>
+                </div>
+            </div>
+
+            <div class="task-content">
+                <!--<todos-->
+                        <!--v-for="todo in filterData"-->
+                        <!--:key="todo.id"-->
+                        <!--:todo="todo"-->
+                <!--&gt;</todos>-->
+
+                <div
+                        class="todo"
+                        v-for="todo in filterData">
+                    <img
+                            class="todo-state middle-vertical"
+                            @click="finishedTodo(todo, $event)"
+                            :src="setStateImg(todo.finished)"
+                            alt="未完成">
+                    <span
+                            class="todo-content"
+                            @click="editingTodo(todo)"
+                    >{{todo.content}}</span>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+
+    <div class="task-detail-wrap" ref="taskDetail">
+        <div class="edit-tool">
+            <div class="right-btn middle-vertical">
+                <button
+                        class="deleteTodoBtn"
+                        @click="deleteTodo"
+                >删除</button>
+
+                <button
+                        class="cancelEditTodoBtn"
+                        @click="cancelEditTodo"
+                >取消</button>
+
+                <button
+                        class="saveEditTodoBtn"
+                        @click="closeEditDiv()"
+                >保存</button>
+            </div>
+        </div>
+        <div class="edit-todo">
+            <img
+                    class="edit-img middle-vertical"
+                    src="images/unfinished.png"
+            >
+            <input
+                    class="edit-input middle-vertical"
+                    type="text"
+                    v-model="editTodo.content"
+            >
+        </div>
+    </div>
+
+</div>
+
+
+<script src="js/index.js"></script>
+
+</body>
+</html>
